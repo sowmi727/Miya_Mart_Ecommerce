@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout - Miya Mart</title>
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
+</head>
+
+<body>
+
+<div class="checkout-page">
+
+    <h1>🛍️ Checkout</h1>
+
+    <div class="checkout-box">
+
+        <h2>📦 Order Summary</h2>
+
+        {% for item in cart_items %}
+        <div class="checkout-product">
+            <h3>{{ item.product.name }}</h3>
+            <p>Price: ₹{{ item.product.price }}</p>
+            <p>Quantity: {{ item.quantity }}</p>
+            <p>Total: ₹{{ item.total }}</p>
+        </div>
+        {% empty %}
+        <p>Your cart is empty!</p>
+        {% endfor %}
+
+        <h2 class="grand-total">
+            Grand Total: ₹{{ grand_total }}
+        </h2>
+
+        <hr>
+
+        <h2>👤 Customer Details</h2>
+
+        <form method="POST" class="customer-form">
+            {% csrf_token %}
+
+            <label>Full Name</label>
+            <input type="text" name="customer_name"
+                   placeholder="Enter your full name" required>
+
+            <label>Mobile Number</label>
+            <input type="tel" name="phone"
+                   placeholder="Enter 10 digit mobile number"
+                   pattern="[0-9]{10}" maxlength="10" required>
+
+            <label>Delivery Address</label>
+            <textarea name="address" rows="4"
+                      placeholder="Enter your full address"
+                      required></textarea>
+
+            <label>Payment Method</label>
+
+        <select name="payment_method" required>
+            <option value="Cash on Delivery">Cash on Delivery</option>
+            <option value="UPI (Demo)">UPI (Demo)</option>
+            <option value="Card (Demo)">Card (Demo)</option>
+        </select>
+        
+            <button type="submit" class="checkout-btn">
+                Place Order 🛍️
+            </button>
+        </form>
+
+        <a href="{% url 'cart' %}" class="back-btn">
+            Back to Cart
+        </a>
+
+    </div>
+</div>
+
+</body>
+</html>

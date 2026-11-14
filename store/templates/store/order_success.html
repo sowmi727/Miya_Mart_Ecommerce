@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Successful |  Miya Mart</title>
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
+</head>
+<body>
+
+<div class="success-page">
+
+    <div class="success-card">
+
+        <div class="success-icon">✓</div>
+
+        <h1>Order Placed Successfully!</h1>
+
+        <p class="success-message">
+            Thank you for shopping with Miya Mart.
+        </p>
+
+        <p>
+            Your order has been received successfully.
+        </p>
+            {% if order %}
+    <p><strong>Order ID:</strong> {{ order.id }}</p>
+    <p><strong>Total Amount:</strong> ₹{{ order.total_amount }}</p>
+    <p><strong>Payment Method:</strong> {{ order.payment_method }}</p>
+    <p><strong>Payment Status:</strong> {{ order.payment_status }}</p>
+{% endif %}
+
+        <p>
+            We will contact you soon.
+        </p>
+
+        <a href="{% url 'home' %}" class="shop-button">
+            Continue Shopping 🛍️
+        </a>
+
+        <p class="footer-text">
+            Thank you for choosing Miya Mart ❤️
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>

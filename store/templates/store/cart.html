@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Miya Mart</title>
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
+</head>
+<body>
+
+    <div class="cart-page">
+        <h1>🛒 My Shopping Cart</h1>
+
+        <div class="cart-container">
+
+            {% for item in cart_items %}
+
+            <div class="cart-item">
+
+                {% if item.product.image %}
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                {% endif %}
+
+                <div>
+                    <h3>{{ item.product.name }}</h3>
+                    <p>Price: ₹{{ item.product.price }}</p>
+
+                    <div class="quantity">
+                        <a href="{% url 'decrease_quantity' item.product.id %}">
+                            <button>−</button>
+                        </a>
+
+                        {{ item.quantity }}
+
+                        <a href="{% url 'increase_quantity' item.product.id %}">
+                            <button>+</button>
+                        </a>
+                    </div>
+
+                    <h3>Total: ₹{{ item.total }}</h3>
+
+                    <a href="{% url 'remove_from_cart' item.product.id %}">
+                        <button class="remove-btn">Remove ❌</button>
+                    </a>
+                </div>
+
+            </div>
+
+            {% empty %}
+                <h3>Your cart is empty!</h3>
+            {% endfor %}
+
+        </div>
+        <h2>Grand Total: ₹{{ grand_total }}</h2>
+        <a href="{% url 'checkout' %}">
+    <button class="checkout-btn"> Proceed to Checkout 🛍️ </button></a>
+        <a href="{% url 'home' %}" class="continue-btn"> Continue Shopping</a>
+
+    </div>
+
+</body>
+</html>

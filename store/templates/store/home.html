@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Miya Mart</title>
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
+</head>
+
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar">
+
+    <h1>🛒 Miya Mart</h1>
+
+    <div class="nav-links">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="#products">Products</a>
+        <a href="{% url 'cart' %}">My Cart 🛒</a>
+    </div>
+
+</nav>
+
+<!-- Hero Section -->
+<section class="new-hero">
+
+    <div>
+        <h1>Welcome to Miya Mart</h1>
+
+        <p>Discover Amazing Products at Best Prices!</p>
+
+        <a href="#products" class="shop-button">
+            Shop Now →
+        </a>
+    </div>
+
+</section>
+
+<!-- Search Bar -->
+<section class="search-section">
+
+    <input type="text"
+           id="searchInput"
+           placeholder="🔍 Search your favourite products...">
+    <div class="category-filter">
+    <button onclick="filterProducts('all')">All</button>
+    <button onclick="filterProducts('mobiles')">Mobiles</button>
+    <button onclick="filterProducts('samsung')">Samsung</button>
+    <button onclick="filterProducts('realme')">Realme</button>
+</div>
+</section>
+
+<!-- Products -->
+<section id="products">
+
+    <h2 class="section-title">Our Products</h2>
+
+    <div class="product-container">
+
+        {% for product in products %}
+
+        <div class="product-card">
+
+            {% if product.image %}
+                <img src="{{ product.image.url }}"
+                     alt="{{ product.name }}">
+            {% endif %}
+
+            <h3>{{ product.name }}</h3>
+
+            <p>{{ product.description }}</p>
+
+            <h3 class="product-price">
+                ₹{{ product.price }}
+            </h3>
+
+            <a href="{% url 'add_to_cart' product.id %}">
+                <button class="add-cart">
+                    Add to Cart 🛒
+                </button>
+            </a>
+
+        </div>
+
+        {% empty %}
+
+        <p>No products available yet.</p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<!-- Footer -->
+<footer class="store-footer">
+
+    <h2>Miya Mart 🛍️</h2>
+
+    <p>Your Favourite Online Shopping Destination</p>
+
+    <p>© 2026 Miya Mart. All Rights Reserved.</p>
+
+</footer>
+
+<!-- Search JavaScript -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const searchInput = document.getElementById("searchInput");
+    const products = document.querySelectorAll(".product-card");
+
+    searchInput.addEventListener("input", function () {
+
+        let searchValue = searchInput.value.toLowerCase().trim();
+
+        products.forEach(function (product) {
+
+            let productName = product.querySelector("h3").innerText.toLowerCase();
+            let productDescription = product.querySelector("p").innerText.toLowerCase();
+
+            if (
+                productName.includes(searchValue) ||
+                productDescription.includes(searchValue)
+            ) {
+                product.style.display = "block";
+            } else {
+                product.style.display = "none";
+            }
+
+        });
+
+    });
+
+});
+</script>
+<script>
+function filterProducts(category) {
+
+    const products = document.querySelectorAll(".product-card");
+
+    products.forEach(function(product) {
+
+        const productName = product.querySelector("h3")
+                                  .innerText.toLowerCase();
+
+        if (category === "all" || category === "mobile") {
+            product.style.display = "block";
+        }
+        else if (productName.includes(category)) {
+            product.style.display = "block";
+        }
+        else {
+            product.style.display = "none";
+        }
+
+    });
+
+}
+</script>
+</body>
+</html>
