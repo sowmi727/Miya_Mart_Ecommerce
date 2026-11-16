@@ -49,8 +49,7 @@ Miya-Mart-Ecommerce/
 1. Clone the repository:
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
-```
+git clone https://github.com/sowmi727/Miya_Mart_Ecommerce.git
 
 2. Open the project folder:
 
